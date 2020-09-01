@@ -1,7 +1,5 @@
 package fpoly.graduation.project.client.dto.classes;
 
-import fpoly.graduation.project.domain.Classes;
-import fpoly.graduation.project.service.dto.ClassesDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateClassRequest {
-    private Classes classes;
+public class DeleteClassRequest {
+    private Integer id;
 }
