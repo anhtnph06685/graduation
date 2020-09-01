@@ -9,6 +9,7 @@ import com.fis.egp.common.security.SecurityUtils;
 import com.fis.egp.common.util.ServiceExceptionBuilder;
 import com.fis.egp.common.util.ServiceUtil;
 import fpoly.graduation.project.client.dto.classes.*;
+import fpoly.graduation.project.client.dto.course.UpdateCourseResponse;
 import fpoly.graduation.project.domain.Classes;
 import fpoly.graduation.project.domain.Course;
 import fpoly.graduation.project.repository.ClassesRepository;
@@ -120,18 +121,13 @@ public class ClassesService {
                         .addError(new ValidationErrorResponse("class", ValidationError.NotNull))
                         .build();
             }
-            Optional<Classes> optional = classesRepository.findById(request.getClasses().getId());
-            if(optional.isPresent()){
-                throw ServiceExceptionBuilder.newBuilder()
-                        .addError(new ValidationErrorResponse("class",ValidationError.NotNull))
-                        .build();
-            }
-            Optional<Course> optionalCourse = courseRepository.findById(request.getClasses().getCourseId());
+            Optional<Course> optionalCourse = courseRepository.findById(request.getClasses().getCourse().getId());
             if(!optionalCourse.isPresent()){
                 throw ServiceExceptionBuilder.newBuilder()
                         .addError(new ValidationErrorResponse("course",ValidationError.NotNull))
                         .build();
             }
+
             Classes classes = new Classes();
             classes.setName(request.getClasses().getName());
             classes.setDescription(request.getClasses().getDescription());
@@ -139,6 +135,8 @@ public class ClassesService {
             classes.setCreatedDate(Instant.now());
             classes.setCreatedBy("admin");
             classes.setStatus(request.getClasses().getStatus());
+            classes.setLastModifiedBy("admin");
+            classes.setLastModifiedDate(Instant.now());
 
             CreateClassResponse response = new CreateClassResponse();
             response.setClasses(classesMapper.toDto(classes));
@@ -148,6 +146,82 @@ public class ClassesService {
         }
         catch (ServiceException e){
             throw  e;
+        }
+        catch (Exception e){
+            throw e;
+        }
+    }
+    public UpdateClassResponse update(UpdateClassRequest request) throws ServiceException, Exception{
+        try {
+            if(request == null){
+                ServiceUtil.generateEmptyPayloadError();
+            }
+            if(request.getClasses() == null){
+                throw ServiceExceptionBuilder.newBuilder()
+                        .addError(new ValidationErrorResponse("classes",ValidationError.NotNull))
+                        .build();
+            }
+            Optional<Classes> optionalClasses = classesRepository.findById(request.getClasses().getId());
+            if(!optionalClasses.isPresent()){
+                throw ServiceExceptionBuilder.newBuilder()
+                        .addError(new ValidationErrorResponse("classes",ValidationError.NotNull))
+                        .build();
+            }
+            Optional<Course> optionalCourse = courseRepository.findById(request.getClasses().getCourse().getId());
+            if (!optionalCourse.isPresent()){
+                throw ServiceExceptionBuilder.newBuilder()
+                        .addError(new ValidationErrorResponse("course",ValidationError.NotNull))
+                        .build();
+            }
+            Classes classes = new Classes();
+
+            classes.setId(request.getClasses().getId());
+            classes.setName(request.getClasses().getName());
+            classes.setDescription(request.getClasses().getDescription());
+            classes.setCourse(optionalCourse.get());
+            classes.setCreatedDate(Instant.now());
+            classes.setCreatedBy("admin");
+            classes.setStatus(request.getClasses().getStatus());
+            classes.setLastModifiedBy("admin");
+            classes.setLastModifiedDate(Instant.now());
+
+            UpdateClassResponse response = new UpdateClassResponse();
+            response.setClasses(classesMapper.toDto(classes));
+
+            classesRepository.save(classes);
+            return response;
+        }
+        catch (ServiceException e){
+            throw e;
+        }
+        catch (Exception e){
+            throw e;
+        }
+    }
+    public DeleteClassResponse delete(DeleteClassRequest request ) throws ServiceException, Exception{
+        try {
+            if (request == null){
+                ServiceUtil.generateEmptyPayloadError();
+            }
+            if(request.getId() == null){
+                throw ServiceExceptionBuilder.newBuilder()
+                        .addError(new ValidationErrorResponse("id",ValidationError.NotNull))
+                        .build();
+            }
+            if(request.getId() < 0){
+                throw ServiceExceptionBuilder.newBuilder()
+                        .addError(new ValidationErrorResponse("id",ValidationError.NegativeOrZero))
+                        .build();
+            }
+            classesRepository.deleteById(request.getId());
+            List<Classes> list = classesRepository.findAll();
+            DeleteClassResponse response = new DeleteClassResponse();
+            response.setClasses(classesMapper.toDto(list));
+
+            return response;
+        }
+        catch (ServiceException e){
+            throw e;
         }
         catch (Exception e){
             throw e;

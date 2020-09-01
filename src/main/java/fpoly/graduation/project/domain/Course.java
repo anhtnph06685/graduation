@@ -18,8 +18,8 @@ public class Course extends AbstractAuditingEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "course_seq")
-    @SequenceGenerator(name = "course",sequenceName = "fpoly_course_seq",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "courseSeq")
+    @SequenceGenerator(name = "courseSeq",sequenceName = "fpoly_course_seq",allocationSize = 1)
     private Integer id;
 
     @Column(name = "description")
@@ -33,4 +33,15 @@ public class Course extends AbstractAuditingEntity implements Serializable {
 
     @Column(name = "status")
     private Integer status;
+
+//    @Column(name ="created_by")
+//    private String createdBy;
+//
+//    @Column(name = "created_date")
+//    private Instant createdDate;
+//
+//    @Column(name = "updated_by")
+//    private String lastModifiedBy;
+
+
 }
