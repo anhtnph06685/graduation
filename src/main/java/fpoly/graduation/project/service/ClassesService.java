@@ -91,13 +91,13 @@ public class ClassesService {
                     searchParams.getCreatedBy() !=null ? searchParams.getCreatedBy() : null
                     ).map(classesMapper :: toDto);
 
-            page.getContent().forEach(classesDTO -> {
-                List<CourseDTO> courseDTOS = courseRepository.getListCourseById(classesDTO.getId())
-                        .stream()
-                        .map(courseMapper :: toDto)
-                        .collect(Collectors.toCollection(LinkedList::new));
-                classesDTO.setCourse(courseDTOS);
-            });
+//            page.getContent().forEach(classesDTO -> {
+//                List<CourseDTO> courseDTOS = courseRepository.getListCourseById(classesDTO.getId())
+//                        .stream()
+//                        .map(courseMapper :: toDto)
+//                        .collect(Collectors.toCollection(LinkedList::new));
+//                classesDTO.setCourse(courseDTOS);
+//            });
 
             GetListClassResponse response = new GetListClassResponse();
             response.setPage(OptimizedPage.convert(page));
@@ -139,9 +139,10 @@ public class ClassesService {
             classes.setLastModifiedDate(Instant.now());
 
             CreateClassResponse response = new CreateClassResponse();
-            response.setClasses(classesMapper.toDto(classes));
 
             classesRepository.save(classes);
+            response.setClasses(classesMapper.toDto(classes));
+
             return response;
         }
         catch (ServiceException e){
@@ -186,9 +187,10 @@ public class ClassesService {
             classes.setLastModifiedDate(Instant.now());
 
             UpdateClassResponse response = new UpdateClassResponse();
-            response.setClasses(classesMapper.toDto(classes));
 
             classesRepository.save(classes);
+            response.setClasses(classesMapper.toDto(classes));
+
             return response;
         }
         catch (ServiceException e){

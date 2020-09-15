@@ -1,26 +1,36 @@
 package fpoly.graduation.project.service.dto;
 
-import fpoly.graduation.project.domain.Classes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClassesDTO implements Serializable{
+public class StudentDTO implements Serializable {
 
     private Integer id;
 
-    private String name;
+    private String firstName;
 
-    private String description;
+    private String lastName;
 
-    private Integer courseId;
+    private Integer gender;
+
+    private String permanentAddress;
+
+    private String tenporaryAddress;
+
+    private Instant startDate;
+
+    private Instant endDate;
+
+    private Instant birth;
+
+    private Integer classId;
 
     private Integer status;
 
@@ -32,7 +42,5 @@ public class ClassesDTO implements Serializable{
 
     private String lastModifiedBy;
 
-//    private List<CourseDTO> course;
-
-
+    private UserDTO user;
 }
