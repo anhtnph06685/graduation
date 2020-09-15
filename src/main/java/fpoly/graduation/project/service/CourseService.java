@@ -111,8 +111,10 @@ public class CourseService {
             course.setLastModifiedDate(Instant.now());
 
             CreateCourseResponse response = new CreateCourseResponse();
-            response.setCourse(courseMapper.toDto(course));
+
             courseRepository.save(course);
+            response.setCourse(courseMapper.toDto(course));
+
             return response;
         } catch (Exception e){
             throw e;
@@ -150,8 +152,9 @@ public class CourseService {
 
             UpdateCourseResponse response = new UpdateCourseResponse();
 
-            response.setCourse(courseMapper.toDto(course));
             courseRepository.save(course);
+            response.setCourse(courseMapper.toDto(course));
+
             return response;
         }
         catch (ServiceException e){
