@@ -6,21 +6,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "specialized")
-public class Specicalized extends AbstractAuditingEntity implements Serializable {
-
+@Table(name = "deparment")
+public class Department extends AbstractAuditingEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "specializedSeq")
-    @SequenceGenerator(name = "specializedSeq",sequenceName = "fpoly_specialized_seq",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "departmentSeq")
+    @SequenceGenerator(name = "departmentSeq",sequenceName = "fpoly_department_seq",allocationSize = 1)
     private Integer id;
 
     @Column(name = "name")
@@ -29,7 +27,10 @@ public class Specicalized extends AbstractAuditingEntity implements Serializable
     @Column(name = "description")
     private  String description;
 
+    @Column(name = "nos")
+    private String nos;
+
     @Column(name = "status")
-    @Size(max = 1)
     private Integer status;
+
 }

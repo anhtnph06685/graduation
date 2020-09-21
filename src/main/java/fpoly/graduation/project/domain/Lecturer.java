@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -13,13 +14,13 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "staff")
-public class Staff extends AbstractAuditingEntity implements Serializable {
+@Table(name = "lecturrer")
+public class Lecturer extends AbstractAuditingEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "staffSeq")
-    @SequenceGenerator(name = "staffSeq",sequenceName = "fpoly_staff_seq",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "lecturerSeq")
+    @SequenceGenerator(name = "lecturerSeq",sequenceName = "fpoly_lecturer_seq",allocationSize = 1)
     private Integer id;
 
     @Column(name = "first_name")
@@ -31,11 +32,13 @@ public class Staff extends AbstractAuditingEntity implements Serializable {
     @Column(name = "gender")
     private Integer gender;
 
-    @Column(name = "permanent_address")
+    @Column(name = "pemanent_address")
+    @Size(max = 1024)
     private String permanentAddress;
 
     @Column(name = "tenporary_address")
-    private String  tenporaryAddress;
+    @Size(max = 1024)
+    private String tenporaryAddress;
 
     @Column(name = "bird")
     private String bird;
@@ -50,7 +53,6 @@ public class Staff extends AbstractAuditingEntity implements Serializable {
     private Instant endDate;
 
     @ManyToOne
-    @JoinColumn(name = "department_id",referencedColumnName = "id")
-    private Department department;
-
+    @JoinColumn(name = "unit_subject_id",referencedColumnName = "id")
+    private  UnitSubject unitSubject;
 }

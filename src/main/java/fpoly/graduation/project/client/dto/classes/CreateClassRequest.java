@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateClassRequest {
-    private Classes classes;
+    private ClassesDTO classes;
 }
