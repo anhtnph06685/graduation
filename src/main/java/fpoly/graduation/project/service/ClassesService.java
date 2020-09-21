@@ -127,8 +127,8 @@ public class ClassesService {
                         .addError(new ValidationErrorResponse("course",ValidationError.NotNull))
                         .build();
             }
-
-            Classes classes = new Classes();
+            ClassesDTO dto = request.getClasses();
+            Classes classes = classesMapper.toEntity(dto);
             classes.setName(request.getClasses().getName());
             classes.setDescription(request.getClasses().getDescription());
             classes.setCourse(optionalCourse.get());

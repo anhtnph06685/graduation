@@ -32,6 +32,8 @@ public class ClassesDTO implements Serializable{
 
     private String lastModifiedBy;
 
+    private CourseDTO course;
+
 //    private List<CourseDTO> course;
 
 
